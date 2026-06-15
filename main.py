@@ -7,16 +7,45 @@ st.set_page_config(page_title="PGA Portal", page_icon="🎒", layout="centered")
 # --- CUSTOM STYLING ---
 st.markdown("""
     <style>
-    .stApp { background-color: #f8f9fa; }
-    .stButton>button { width: 100%; border-radius: 5px; background-color: #004a99; color: white; }
-    .report-card-header { background: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    /* 1. Deep Dark Purple Background */
+    .stApp { 
+        background-color: #2e1a47 !important; 
+    }
+    
+    /* 2. White Text for readability */
+    h1, h2, h3, p, label, div { 
+        color: #ffffff !important; 
+    }
+    
+    /* 3. Button Styling */
+    .stButton>button { 
+        width: 100%; 
+        border-radius: 8px; 
+        background-color: #7b2cbf !important; 
+        color: white !important; 
+        border: none;
+    }
+    
+    /* 4. Report Card Box */
+    .report-card-header { 
+        background-color: #3c2a5c !important; 
+        padding: 20px; 
+        border-radius: 10px; 
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+    }
+    
+    /* 5. Table styling fix */
+    .stTable {
+        background-color: #3c2a5c !important;
+        color: white !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
 # --- SUPABASE SETUP ---
 @st.cache_resource
 def init_supabase():
-    # Loading secrets from Streamlit Cloud
+    # Loading secrets from Streamlit Cloud securely
     url = st.secrets["SUPABASE_URL"]
     key = st.secrets["SUPABASE_KEY"]
     return create_client(url, key)
