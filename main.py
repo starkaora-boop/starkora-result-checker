@@ -1,5 +1,5 @@
 import streamlit as st
-from supabase import create_client, Client
+from supabase import create_client
 
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="PGA Portal", page_icon="🎒", layout="centered")
@@ -14,12 +14,12 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # --- SUPABASE SETUP ---
-SUPABASE_URL = "https://iayucydjbndlclxwavij.supabase.co"
-SUPABASE_KEY = "sb_publishable_0Z_esqpATnHhmDISybkDGQ_gnHxCVdM" # <--- REPLACE WITH YOUR ACTUAL KEY
-
 @st.cache_resource
 def init_supabase():
-    return create_client(SUPABASE_URL, SUPABASE_KEY)
+    # Loading secrets from Streamlit Cloud
+    url = st.secrets["SUPABASE_URL"]
+    key = st.secrets["SUPABASE_KEY"]
+    return create_client(url, key)
 
 supabase = init_supabase()
 
@@ -28,7 +28,6 @@ st.title("Perfect Gift Academy - Result Checker")
 student_id = st.text_input("Enter Student ID", placeholder="e.g., PGA-2026-001")
 pin = st.text_input("Enter Access PIN", type="password")
 academic_year = st.selectbox("Select Academic Session", ["2025/26"])
-# Look for something like this in your main.py
 selected_term = st.selectbox("Select Term", ["First Term", "Second Term", "Third Term"])
 
 if st.button("Check Result"):
